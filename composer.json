@@ -9,15 +9,8 @@
             "email": "dev@van-tomas.de"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "file:///home/tommy/workspace/DreadLabs/app-migration"
-        }
-    ],
     "require": {
-        "robmorgan/phinx": "0.4.4",
-        "dreadlabs/app-migration": "dev-master"
+        "robmorgan/phinx": "0.4.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.6",

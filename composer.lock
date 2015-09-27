@@ -4,52 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d709a54d9020b811fd892638f83ba67e",
-    "content-hash": "d56cf47c67978995ecba3d38f6d76b32",
+    "hash": "6229ade8e19ebef9116e2d28a60c2095",
+    "content-hash": "0b70c0f55c94d51b0c6104a0a7fb815d",
     "packages": [
-        {
-            "name": "dreadlabs/app-migration",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "/home/tommy/workspace/DreadLabs/app-migration",
-                "reference": "308c2a43e727d779c04a09f54f6149a162373ecf"
-            },
-            "require-dev": {
-                "apigen/apigen": "~4.1",
-                "codeclimate/php-test-reporter": "dev-master",
-                "pdepend/pdepend": "~2.0",
-                "phploc/phploc": "~2.1",
-                "phpmd/phpmd": "~2.2",
-                "phpunit/phpunit": "~4.6",
-                "satooshi/php-coveralls": "~0.6",
-                "sebastian/phpcpd": "~2.0",
-                "squizlabs/php_codesniffer": "~2.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreadLabs\\AppMigration\\": "src/",
-                    "DreadLabs\\AppMigration\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "doc:api:generate": [
-                    "php vendor/bin/apigen generate --source='./src' --destination='./build/api/' --access-levels='public,protected,private' --template-theme=default --title='DreadLabs - AppMigration' --no-source-code"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thomas Juhnke",
-                    "email": "dev@van-tomas.de"
-                }
-            ],
-            "description": "Provides a package for adding runtime migrations to an application.",
-            "time": "2015-09-27 19:50:52"
-        },
         {
             "name": "robmorgan/phinx",
             "version": "v0.4.4",
@@ -3759,7 +3716,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "dreadlabs/app-migration": 20,
         "codeclimate/php-test-reporter": 20
     },
     "prefer-stable": false,
