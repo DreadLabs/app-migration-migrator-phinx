@@ -1,0 +1,17 @@
+paths:
+    migrations: %%PHINX_CONFIG_DIR%%/migrations_some
+
+environments:
+    default_migration_table: phinxlog
+
+    # The naming is a bit unfortunate: it means default `environment`
+    default_database: default
+
+    default:
+        adapter: test
+        host: localhost
+        name: db_name
+        user: db_user
+        pass: 'db_pass'
+        port: db_port
+        charset: utf8
