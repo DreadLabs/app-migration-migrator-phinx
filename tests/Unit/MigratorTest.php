@@ -16,9 +16,9 @@ use DreadLabs\AppMigration\Exception\TopologyViolationException;
 use DreadLabs\AppMigration\Migrator\Phinx\Migrator;
 use DreadLabs\AppMigration\Migrator\Phinx\OutputInterface;
 use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestAllAdapter;
-use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestInvalidDirectionAdapter;
 use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestNoneAdapter;
 use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestSomeAdapter;
+use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestTopologyViolationAdapter;
 use Phinx\Config\Config;
 use Phinx\Config\ConfigInterface;
 use Phinx\Db\Adapter\AdapterFactory;
@@ -107,7 +107,7 @@ class MigratorTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(TopologyViolationException::class);
 
-        $this->registerTestAdapter(TestInvalidDirectionAdapter::class);
+        $this->registerTestAdapter(TestTopologyViolationAdapter::class);
 
         $config = $this->getConfiguration('phinx_all.yml');
 

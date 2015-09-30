@@ -20,11 +20,11 @@ use Phinx\Migration\MigrationInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * TestInvalidDirectionAdapter
+ * TestTopologyViolationAdapter
  *
  * @author Thomas Juhnke <dev@van-tomas.de>
  */
-class TestInvalidDirectionAdapter implements AdapterInterface
+class TestTopologyViolationAdapter implements AdapterInterface
 {
 
     /**
