@@ -25,8 +25,11 @@
     },
     "autoload": {
         "psr-4": {
-            "DreadLabs\\AppMigrationMigrator\\Phinx\\": "src/",
-            "DreadLabs\\AppMigrationMigrator\\Phinx\\Tests\\": "tests/"
+            "DreadLabs\\AppMigration\\Migrator\\Phinx\\": "src/",
+            "DreadLabs\\AppMigration\\Migrator\\Phinx\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "doc:api:generate": "php vendor/bin/apigen generate --source='./src' --destination='./build/api/' --access-levels='public,protected,private' --template-theme=default --title='DreadLabs - AppMigrationMigrator - Phinx' --no-source-code"
     }
 }

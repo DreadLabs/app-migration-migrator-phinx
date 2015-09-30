@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the AppMigrationMigrator/Phinx package.
+ * This file is part of the AppMigration\Migrator\Phinx package.
  *
  * (c) Thomas Juhnke <dev@van-tomas.de>
  *

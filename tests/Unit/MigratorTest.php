@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the AppMigrationMigrator/Phinx package.
+ * This file is part of the AppMigration\Migrator\Phinx package.
  *
  * (c) Thomas Juhnke <dev@van-tomas.de>
  *
@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace DreadLabs\AppMigrationMigrator\Phinx\Tests\Unit;
+namespace DreadLabs\AppMigration\Migrator\Phinx\Tests\Unit;
 
 use DreadLabs\AppMigration\Exception\MigrationException;
 use DreadLabs\AppMigration\Exception\TopologyViolationException;
-use DreadLabs\AppMigrationMigrator\Phinx\Migrator;
-use DreadLabs\AppMigrationMigrator\Phinx\OutputInterface;
-use DreadLabs\AppMigrationMigrator\Phinx\Tests\Fixture\TestAllAdapter;
-use DreadLabs\AppMigrationMigrator\Phinx\Tests\Fixture\TestInvalidDirectionAdapter;
-use DreadLabs\AppMigrationMigrator\Phinx\Tests\Fixture\TestNoneAdapter;
-use DreadLabs\AppMigrationMigrator\Phinx\Tests\Fixture\TestSomeAdapter;
+use DreadLabs\AppMigration\Migrator\Phinx\Migrator;
+use DreadLabs\AppMigration\Migrator\Phinx\OutputInterface;
+use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestAllAdapter;
+use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestInvalidDirectionAdapter;
+use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestNoneAdapter;
+use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestSomeAdapter;
 use Phinx\Config\Config;
 use Phinx\Config\ConfigInterface;
 use Phinx\Db\Adapter\AdapterFactory;
@@ -32,7 +32,7 @@ class MigratorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var OutputInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \DreadLabs\AppMigration\Migrator\Phinx\OutputInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $output;
 
