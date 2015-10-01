@@ -19,9 +19,13 @@ use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestAllAdapter;
 use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestNoneAdapter;
 use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestSomeAdapter;
 use DreadLabs\AppMigration\Migrator\Phinx\Tests\Fixture\TestTopologyViolationAdapter;
+use DreadLabs\AppMigration\MigratorInterface;
 use Phinx\Config\Config;
 use Phinx\Config\ConfigInterface;
 use Phinx\Db\Adapter\AdapterFactory;
+use Phinx\Db\Adapter\AdapterInterface;
+use Phinx\Migration\Manager;
+use Phinx\Migration\Manager\Environment;
 
 /**
  * MigratorTest
@@ -32,7 +36,7 @@ class MigratorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \DreadLabs\AppMigration\Migrator\Phinx\OutputInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var OutputInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $output;
 
@@ -41,13 +45,18 @@ class MigratorTest extends \PHPUnit_Framework_TestCase
         $this->output = $this->getMock(OutputInterface::class);
     }
 
+    /**
+     * ItDoesNotNeedToRunIfMigratedVersionsAndAvailableVersionsAreEmpty
+     *
+     * @return void
+     */
     public function testItDoesNotNeedToRunIfMigratedVersionsAndAvailableVersionsAreEmpty()
     {
-        $this->registerTestAdapter(TestNoneAdapter::class);
-
         $config = $this->getConfiguration('phinx_none.yml');
 
         $migrator = new Migrator($config, $this->output);
+
+        $this->registerTestAdapter(TestNoneAdapter::class, $migrator);
 
         $this->assertFalse($migrator->needsToRun());
     }
@@ -56,15 +65,30 @@ class MigratorTest extends \PHPUnit_Framework_TestCase
      * Registers a test adapter
      *
      * @param string $className
+     * @param MigratorInterface $migrator
      *
      * @return void
      */
-    private function registerTestAdapter($className)
+    private function registerTestAdapter($className, MigratorInterface $migrator)
     {
-        AdapterFactory::instance()->registerAdapter(
-            'test',
-            $className
-        );
+        $reflectedMigrator = new \ReflectionClass($migrator);
+        $reflectedManager = $reflectedMigrator->getProperty('manager');
+        $reflectedManager->setAccessible(true);
+
+        /* @var $manager Manager */
+        $manager = $reflectedManager->getValue($migrator);
+
+        /* @var $environment Environment */
+        $environment = $manager->getEnvironment('default');
+
+        $environment->registerAdapter('test', function (Environment $environment) use ($className) {
+            /* @var $adapter AdapterInterface */
+            $adapter = new $className();
+            $adapter->setOptions($environment->getOptions());
+            $adapter->setOutput($environment->getOutput());
+
+            return $adapter;
+        });
     }
 
     /**
@@ -81,61 +105,98 @@ class MigratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * ItDoesNotNeedToRunIfAllMigrationsAreExecuted
+     *
+     * @return void
+     */
     public function testItDoesNotNeedToRunIfAllMigrationsAreExecuted()
     {
-        $this->registerTestAdapter(TestAllAdapter::class);
-
         $config = $this->getConfiguration('phinx_all.yml');
 
         $migrator = new Migrator($config, $this->output);
+
+        $this->registerTestAdapter(TestAllAdapter::class, $migrator);
 
         $this->assertFalse($migrator->needsToRun());
     }
 
+    /**
+     * ItNeedsToRunIfThereAreSomeUnmigratedMigrations
+     *
+     * @return void
+     */
     public function testItNeedsToRunIfThereAreSomeUnmigratedMigrations()
     {
-        $this->registerTestAdapter(TestSomeAdapter::class);
-
         $config = $this->getConfiguration('phinx_some.yml');
 
         $migrator = new Migrator($config, $this->output);
+
+        $this->registerTestAdapter(TestSomeAdapter::class, $migrator);
 
         $this->assertTrue($migrator->needsToRun());
     }
 
+    /**
+     * ItAdheresToATopologicalOrder
+     *
+     * @return void
+     *
+     * @throws MigrationException
+     * @throws TopologyViolationException
+     */
     public function testItAdheresToATopologicalOrder()
     {
         $this->setExpectedException(TopologyViolationException::class);
 
-        $this->registerTestAdapter(TestTopologyViolationAdapter::class);
-
         $config = $this->getConfiguration('phinx_all.yml');
 
         $migrator = new Migrator($config, $this->output);
+
+        $this->registerTestAdapter(TestTopologyViolationAdapter::class, $migrator);
+
         $migrator->needsToRun();
         $migrator->migrate();
     }
 
+    /**
+     * ItTransformsAdapterExceptionsIntoMigrationException
+     *
+     * @return void
+     *
+     * @throws MigrationException
+     * @throws TopologyViolationException
+     */
     public function testItTransformsAdapterExceptionsIntoMigrationException()
     {
         $this->setExpectedException(MigrationException::class, 'Life, the universe and everything.');
 
-        $this->registerTestAdapter(TestSomeAdapter::class);
-
         $config = $this->getConfiguration('phinx_some_erroneous.yml');
 
         $migrator = new Migrator($config, $this->output);
+
+        $this->registerTestAdapter(TestSomeAdapter::class, $migrator);
+
         $migrator->needsToRun();
         $migrator->migrate();
     }
 
+    /**
+     * ItReturnsTheLatestVersionToMigrateTo
+     *
+     * @return void
+     *
+     * @throws MigrationException
+     * @throws TopologyViolationException
+     */
     public function testItReturnsTheLatestVersionToMigrateTo()
     {
-        $this->registerTestAdapter(TestSomeAdapter::class);
-
         $config = $this->getConfiguration('phinx_some.yml');
 
         $migrator = new Migrator($config, $this->output);
+
+        $this->registerTestAdapter(TestSomeAdapter::class, $migrator);
+
         $migrator->needsToRun();
 
         $this->assertSame(42, $migrator->migrate());
