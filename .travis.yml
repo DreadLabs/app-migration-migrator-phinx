@@ -1,0 +1,29 @@
+language: php
+php:
+#  - 7.0
+  - 5.6
+  - 5.5
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libxml2-utils php5-curl
+
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction
+  - composer -o dump-autoload
+  - mkdir -p ./build/
+
+script:
+  - find . -path "./src/*.php" -exec php -l {} \;
+  - php vendor/bin/phpunit -c phpunit.xml.dist
+  - php vendor/bin/pdepend --jdepend-chart=./build/jdepend-chart.svg --jdepend-xml=./build/jdepend.xml --overview-pyramid=./build/jdepend-pyramid.svg --summary-xml=./build/pdepend-summary.xml --coverage-report=./build/clover.xml --suffix=php --ignore=**/vendor/**,**/tests/** ./src/
+  - php vendor/bin/phploc --names="*.php" --count-tests --exclude="vendor" --log-csv="./build/phploc.csv" --log-xml="./build/phploc.xml" --progress ./src ./tests
+  - php vendor/bin/phpcpd --names="*.php" --log-pmd="./build/phpcpd.xml" --progress ./src/
+  - php vendor/bin/phpmd ./src/ xml cleancode,codesize,controversial,design,naming,unusedcode --reportfile ./build/phpmd.xml --minimumpriority 1 || true
+  - php vendor/bin/phpcs -np --report=checkstyle --report-checkstyle=./build/checkstyle.xml --standard=PSR2 --ignore=**/vendor/**,**/tests/** --extensions=php ./src ./tests || true
+
+
+after_script:
+  - php vendor/bin/coveralls
+#  - CODECLIMATE_REPO_TOKEN=a0bf52a7a9b4959126b3a2cac1c51d8d1305d672d124c1da1a836155733529fb ./vendor/bin/test-reporter --coverage-report="./build/clover.xml"

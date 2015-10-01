@@ -1,0 +1,45 @@
+build:
+    environment:
+        php: '5.5.14'
+
+filter:
+    excluded_paths:
+        - 'tests/*'
+
+checks:
+    php: true
+
+coding_style:
+    php:
+        indentation:
+            general:
+                size: 1
+        spaces:
+            general:
+                linefeed_character: newline
+            before_parentheses:
+                closure_definition: true
+            around_operators:
+                concatenation: true
+        braces:
+            classes_functions:
+                class: new-line
+                function: new-line
+                closure: undefined
+            if:
+                opening: end-of-line
+            for:
+                opening: end-of-line
+            while:
+                opening: end-of-line
+            do_while:
+                opening: end-of-line
+            switch:
+                opening: end-of-line
+            try:
+                opening: end-of-line
+        upper_lower_casing:
+            keywords:
+                general: lower
+            constants:
+                true_false_null: lower
