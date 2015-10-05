@@ -26,4 +26,4 @@ script:
 
 after_script:
   - php vendor/bin/coveralls
-#  - CODECLIMATE_REPO_TOKEN=a0bf52a7a9b4959126b3a2cac1c51d8d1305d672d124c1da1a836155733529fb ./vendor/bin/test-reporter --coverage-report="./build/clover.xml"
+  - CODECLIMATE_REPO_TOKEN=06624a7693cc9f1d51ec4c84e563dea6f26bdfde7206567d331adbfd96a52605 ./vendor/bin/test-reporter --coverage-report="./build/clover.xml"
