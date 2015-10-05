@@ -4,9 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "33d909feac21492e201bd70bc44da0fd",
-    "content-hash": "96890a38456c3f823638c58cce7e5f6f",
+    "hash": "475fc6f5048c9f017e323af57b32e545",
+    "content-hash": "3a006fcf3d913ff17bfe8ee9f790ee1d",
     "packages": [
+        {
+            "name": "dreadlabs/app-migration",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DreadLabs/app-migration.git",
+                "reference": "5c6af304cab96f027e72a21436d0d171dc4de8db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DreadLabs/app-migration/zipball/5c6af304cab96f027e72a21436d0d171dc4de8db",
+                "reference": "5c6af304cab96f027e72a21436d0d171dc4de8db",
+                "shasum": ""
+            },
+            "require-dev": {
+                "apigen/apigen": "~4.1",
+                "codeclimate/php-test-reporter": "dev-master",
+                "pdepend/pdepend": "~2.0",
+                "phploc/phploc": "~2.1",
+                "phpmd/phpmd": "~2.2",
+                "phpunit/phpunit": "~4.6",
+                "sebastian/phpcpd": "~2.0",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreadLabs\\AppMigration\\": "src/",
+                    "DreadLabs\\AppMigration\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Juhnke",
+                    "email": "dev@van-tomas.de"
+                }
+            ],
+            "description": "Provides a package for adding runtime migrations to an application.",
+            "time": "2015-10-01 09:53:36"
+        },
         {
             "name": "robmorgan/phinx",
             "version": "v0.4.0",
