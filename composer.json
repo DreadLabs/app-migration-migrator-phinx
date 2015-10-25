@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "robmorgan/phinx": "0.4.0",
+        "robmorgan/phinx": "0.4.4",
         "dreadlabs/app-migration": "~0.1.0"
     },
     "require-dev": {
